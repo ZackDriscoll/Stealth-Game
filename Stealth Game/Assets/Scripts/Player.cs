@@ -30,12 +30,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            tf.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+            tf.position += tf.up * movementSpeed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            tf.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+            tf.position -= tf.up * movementSpeed * Time.deltaTime;
         }
     }
 }
