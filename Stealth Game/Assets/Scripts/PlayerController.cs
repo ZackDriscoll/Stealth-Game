@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : Controller
 {
     private Transform tf;
-
-    public float rotationSpeed = 1.0f;
     public float movementSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
+        pawn = FindObjectOfType<PlayerPawn>();
         tf = gameObject.GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            pawn.Attack();
+        }
+
+        pawn.Move();
+
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             tf.position += tf.right * movementSpeed * Time.deltaTime;
