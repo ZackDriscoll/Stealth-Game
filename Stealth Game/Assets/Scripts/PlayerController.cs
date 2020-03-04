@@ -6,6 +6,7 @@ public class PlayerController : Controller
 {
     private Transform tf;
     public float movementSpeed = 1.0f;
+    public float rotationSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +22,6 @@ public class PlayerController : Controller
         {
             pawn.Attack();
         }
-
-        pawn.Move();
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {

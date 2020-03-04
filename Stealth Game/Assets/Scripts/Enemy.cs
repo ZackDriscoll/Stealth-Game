@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         CanHear(GameManager.instance.player);
+        CanSee(GameManager.instance.player);
 
         if (AIState == "Idle")
         {
@@ -144,15 +145,38 @@ public class Enemy : MonoBehaviour
 
     public bool CanSee(GameObject target)
     {
-        Vector3 vectorToTarget = target.transform.position - tf.position;
-        //Detect if target is inside FOV
-        float angleToTarget = Vector3.Angle(vectorToTarget, tf.up);
+        // We use the location of our target in a number of calculations - store it in a variable for easy access.
+        Transform targetTf = target.GetComponent<Transform>();
+        Vector3 targetPosition = targetTf.position;
 
-        if (angleToTarget <= fieldOfView)
+        // Find the vector from the agent to the target
+        // We do this by subtracting "destination minus origin", so that "origin plus vector equals destination."
+        Vector3 agentToTargetVector = targetPosition - transform.position;
+
+        // Find the angle between the direction our agent is facing (forward in local space) and the vector to the target.
+        float angleToTarget = Vector3.Angle(agentToTargetVector, transform.forward);
+
+        // if that angle is less than our field of view
+        if (angleToTarget < fieldOfView)
         {
-            //Detect is target is in line of sight
-        }
+            // Raycast
+            RaycastHit2D hitInfo = Physics2D.Raycast(tf.position, agentToTargetVector);
 
+            // If the first object we hit is our target 
+            if (hitInfo.collider.gameObject == target)
+            {
+                // return true 
+                //    -- note that this will exit out of the function, so anything after this functions like an else
+                return true;
+            }
+        }
+        //   -- note that because we returned true when we determined we could see the target, 
+        //      this will only run if we hit nothing or if we hit something that is not our target.
         return false;
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        Destroy(other.gameObject);
     }
 }
