@@ -167,6 +167,7 @@ public class Enemy : MonoBehaviour
             {
                 // return true 
                 //    -- note that this will exit out of the function, so anything after this functions like an else
+                Debug.Log("I see you.");
                 return true;
             }
         }

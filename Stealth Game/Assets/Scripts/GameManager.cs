@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameObject TitleBackgroundImage;
     public GameObject TitleText;
     public GameObject StartGameButton;
+    public GameObject VictoryBackground;
+    public GameObject VictoryText;
 
     public GameObject player;
 
@@ -25,21 +27,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        Quit();
     }
 
     public void Quit()
     {
-        Application.Quit();
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void StartGame()
@@ -47,5 +45,7 @@ public class GameManager : MonoBehaviour
         TitleBackgroundImage.SetActive(false);
         TitleText.SetActive(false);
         StartGameButton.SetActive(false);
+        VictoryBackground.SetActive(false);
+        VictoryText.SetActive(false);
     }
 }
